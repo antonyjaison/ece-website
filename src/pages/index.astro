@@ -1,0 +1,97 @@
+---
+import Layout from "../layouts/root-layout.astro";
+import "@/styles/global.css";
+import Section from "@/sections/section.astro";
+import { cn } from "@/lib/utils";
+import { StackedEventCarousel } from "@/components/carousel";
+import Events from "@/sections/events.astro";
+import { Image } from "astro:assets";
+import eceHod from "@/assets/ecehod.jpg";
+const normalAlignment = "col-start-3 col-end-[14]";
+const fullBleed = "col-start-1 col-end-[-1]";
+---
+
+<script>
+  const msgNode = document.querySelector(".msg-hod h3") as HTMLElement;
+  const mediaQuery = window.matchMedia("(min-width: 768px)");
+
+  function handleMediaQueryChange(e: MediaQueryListEvent | MediaQueryList) {
+    if (e.matches) {
+      msgNode.textContent = "Message from the Head of Department";
+    } else {
+      msgNode.textContent = "Message from the H.O.D";
+    }
+  }
+
+  handleMediaQueryChange(mediaQuery);
+
+  mediaQuery.addEventListener("change", handleMediaQueryChange);
+</script>
+
+<Layout
+  title="Department of Electronics and Communication Engineering | GEC PKD"
+>
+  <div class="bg-white min-h-screen pt-5 grid g-t space-y-8 py-2">
+    <!-- <Header /> -->
+    <div class="h-[400px] w-full bg-gray-300 col-start-1 col-end-[-1]"></div>
+    <Section title="About the Department" wrapperClass={normalAlignment}>
+      <p
+        class="leading-7 [&:not(:first-child)]:mt-6 font-medium text-pretty max-w-screen-lg text-lg"
+      >
+        Department of Electronics and Communication Engineering offering B.Tech
+        in Electronics and Communication Engineering. Later the programme has
+        been affiliated to APJ Abdul Kalam Technological University since its
+        inception from 2015 onwards. B.Tech programme is accredited by NBA.
+      </p>
+    </Section>
+    <Section
+      title="Message from the H.O.D"
+      wrapperClass={cn(normalAlignment, "msg-hod")}
+    >
+      <div class="flex gap-4 flex-col md:flex-row">
+        <div class="md:flex-shrink-0">
+          <!-- <div class="w-full md:w-[450px] h-[250px] bg-gray-400"></div> -->
+          <Image
+            src={eceHod}
+            alt="ece hod"
+            width={400}
+            height={250}
+            class="h-full md:w-[400px] bg-gray-400 rounded-md"
+          />
+        </div>
+        <blockquote class="flex-grow italic max-w-screen-sm">
+          <p class="leading-7 font-medium text-pretty text-lg text-justify">
+            "The electronics and communication engineering department is one of
+            the most prominent departments in the college. It is the first
+            department of the college to offer a bachelor's degree in
+            electronics and communication engineering. The department has been
+            established in 1996 and has been affiliated to APJ Abdul Kalam
+            Technological University since its inception from 2015 onwards.
+            B.Tech programme is accredited by NBA."
+          </p>
+          <p
+            class="text-sm font-semibold text-gray-500 mt-2 text-start md:text-end"
+          >
+            -Prof. Anwar Hussain M
+          </p>
+        </blockquote>
+      </div>
+    </Section>
+    <Section wrapperClass={cn(normalAlignment)} title="Mission">
+      <blockquote class="italic">
+        <p class="leading-7 font-medium text-pretty text-black text-xl">
+          "To mould the youth as excellent engineers in Electronics and
+          Communication for the betterment of the society"
+        </p>
+      </blockquote>
+    </Section>
+    <Section wrapperClass={cn(normalAlignment, "")} title="News">
+      <div class="pt-12">
+        <StackedEventCarousel client:load />
+      </div>
+    </Section>
+    <Section wrapperClass={cn(normalAlignment, "")} title="Events">
+      <Events />
+    </Section>
+  </div>
+</Layout>
